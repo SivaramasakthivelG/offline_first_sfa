@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:offline_outlet/core/di/injections.dart';
 import 'package:offline_outlet/viewmodels/outlet/outlet_cubit.dart';
 import 'package:offline_outlet/viewmodels/outlet/outlet_state.dart';
+import 'package:offline_outlet/viewmodels/product/product_cubit.dart';
+import 'package:offline_outlet/views/order/order_page.dart';
 
 class OutletListPage extends StatelessWidget {
   const OutletListPage({super.key});
@@ -78,7 +81,17 @@ class OutletListPage extends StatelessWidget {
                         ),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () {
-                          // Navigate to Order Page later
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider(
+                                create: (_) => getIt<ProductCubit>()..loadProducts(),
+                                child: OrderPage(
+                                  outlet: outlet,
+                                ),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     );
