@@ -36,8 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_bloc:
   get_it:
-  isar:
-  isar_flutter_libs:
   path_provider:
   geolocator:
   uuid:
@@ -55,7 +53,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   build_runner:
-  isar_generator:
   mocktail:
   bloc_test:
 
