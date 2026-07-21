@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:offline_outlet/data/local/database.dart';
 
 class OutletModel extends Equatable {
   final String id;
@@ -37,6 +38,28 @@ class OutletModel extends Equatable {
       'updatedAt': updatedAt.toIso8601String(),
       'version': version,
     };
+  }
+
+  OutletsCompanion toCompanion() {
+    return OutletsCompanion.insert(
+      id: id,
+      name: name,
+      latitude: latitude,
+      longitude: longitude,
+      updatedAt: updatedAt,
+      version: version,
+    );
+  }
+
+  factory OutletModel.fromDatabase(Outlet outlet) {
+    return OutletModel(
+      id: outlet.id,
+      name: outlet.name,
+      latitude: outlet.latitude,
+      longitude: outlet.longitude,
+      updatedAt: outlet.updatedAt,
+      version: outlet.version,
+    );
   }
 
   @override

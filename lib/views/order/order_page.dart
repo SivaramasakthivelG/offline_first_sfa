@@ -41,6 +41,30 @@ class OrderPage extends StatelessWidget {
                     return ListTile(
                       title: Text(product.name),
                       subtitle: Text(product.sku),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              context.read<ProductCubit>().decreaseQuantity(product.sku);
+                            },
+                            icon: const Icon(Icons.remove_circle_outline),
+                          ),
+                          Text(
+                            product.quantity.toString(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              context.read<ProductCubit>().increaseQuantity(product.sku);
+                            },
+                            icon: const Icon(Icons.add_circle_outline),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 );

@@ -38,7 +38,7 @@ dependencies:
   get_it:
   path_provider:
   geolocator:
-  uuid:
+  uuid: ^4.5.1
   equatable:
   connectivity_plus:
   drift: ^2.29.0

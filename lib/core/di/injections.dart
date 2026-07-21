@@ -7,7 +7,6 @@ import 'package:offline_outlet/data/repositories/outlet_repository.dart';
 import 'package:offline_outlet/data/repositories/product_repository.dart';
 import 'package:offline_outlet/viewmodels/outlet/outlet_cubit.dart';
 import 'package:offline_outlet/data/local/database.dart';
-import 'package:offline_outlet/data/local/dao/outlet_dao.dart';
 import 'package:offline_outlet/viewmodels/order/order_cubit.dart';
 import 'package:offline_outlet/viewmodels/product/product_cubit.dart';
 
@@ -23,7 +22,10 @@ void _registerDataLayer() {
       OutletMockApi.new,
     )
     ..registerLazySingleton<OutletRepository>(
-      () => OutletRepository(getIt()),
+          () => OutletRepository(
+        getIt<OutletMockApi>(),
+            getIt<AppDatabase>(),
+          ),
     )
     ..registerFactory<OutletCubit>(
       () => OutletCubit(getIt()),
@@ -45,9 +47,6 @@ void _registerDataLayer() {
     )
     ..registerLazySingleton<AppDatabase>(
         () => AppDatabase(),
-    )
-    ..registerLazySingleton<OutletDao>(
-        () => OutletDao(getIt<AppDatabase>()),
     )
     ..registerFactory<OrderCubit>(
           () => OrderCubit(getIt()),

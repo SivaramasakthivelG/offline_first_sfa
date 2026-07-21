@@ -2,6 +2,7 @@ import 'package:offline_outlet/data/models/outlet_model.dart';
 
 class OutletMockApi {
   Future<List<OutletModel>> fetchOutlets() async {
+    //throw Exception("No Internet");
     await Future.delayed(const Duration(seconds: 1));
 
     final response = [

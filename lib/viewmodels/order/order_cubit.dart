@@ -1,7 +1,8 @@
-
-
+import 'package:uuid/uuid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:offline_outlet/data/models/order_item_model.dart';
 import 'package:offline_outlet/data/models/order_model.dart';
+import 'package:offline_outlet/data/models/product_model.dart';
 import 'package:offline_outlet/data/repositories/order_repository.dart';
 import 'package:offline_outlet/viewmodels/order/order_state.dart';
 
@@ -9,6 +10,38 @@ class OrderCubit extends Cubit<OrderState> {
   final OrderRepository _repository;
 
   OrderCubit(this._repository) : super(const OrderState());
+
+  Future<void> placeOrder({
+    required String outletId,
+    required List<ProductModel> products,
+  }) async {
+    final selectedProducts =
+    products.where((product) => product.quantity > 0).toList();
+
+    if (selectedProducts.isEmpty) {
+      return;
+    }
+
+    final orderItems = selectedProducts
+        .map(
+          (product) => OrderItemModel(
+        sku: product.sku,
+        quantity: product.quantity,
+      ),
+    )
+        .toList();
+
+    final order = OrderModel(
+      id: const Uuid().v4(),
+      outletId: outletId,
+      items: orderItems,
+      createdAt: DateTime.now(),
+      version: 1,
+      status: OrderStatus.pending,
+    );
+
+    await createOrder(order);
+  }
 
   Future<void> createOrder(OrderModel order) async {
     emit(
